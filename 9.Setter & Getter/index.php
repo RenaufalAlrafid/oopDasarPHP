@@ -9,10 +9,8 @@ class Produk{
     $judul,
     $penulis,
     $penerbit,
-    $harga;
-
-    protected 
-    $diskon = 0;
+    $harga,
+    $diskon;
 
 
     //method
@@ -37,7 +35,7 @@ class Produk{
         return $str;
     }
 
-    public function setDiskon($diskon)
+    public function getDiskon($diskon)
     {
         $this->diskon = $diskon;
     }
@@ -87,6 +85,11 @@ class Produk{
         $this->harga = $harga;
     }
 
+    public function setDiskon($diskon)
+    {
+        $this->diskon = $diskon;
+    }
+
 }
 
 
@@ -118,12 +121,7 @@ class Game extends GlobalProduk{
         return $str;
     }
 
-    public function setDiskon($diskon)
-    {
-        $this->diskon = $diskon;
-    }
-    
-    
+
 }
 
 class cetakInfoProduk{
