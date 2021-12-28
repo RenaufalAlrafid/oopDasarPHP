@@ -2,11 +2,15 @@
 //* jualan Produk komik dan game 
 
 use cetakInfoProduk as GlobalCetakInfoProduk;
-use Produk as GlobalProduk;
+
+
+interface infoProfuk{
+    public function getInfoProduk();
+}
 
 abstract class Produk{
     //property
-    private
+    protected
     $judul,
     $penulis,
     $penerbit,
@@ -29,13 +33,9 @@ abstract class Produk{
         $this->harga = $harga;
     }
 
-    abstract public function getInfoProduk();
+    abstract public function getinfo();
     
-    public function getInfo(){
-        $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
-
-        return $str;
-    }
+    
 
     public function getDiskon($diskon)
     {
@@ -95,7 +95,7 @@ abstract class Produk{
 }
 
 
-class Komik extends GlobalProduk{
+class Komik extends Produk implements infoProfuk {
     public $jmlhalaman;
 
     public function __construct($judul = "judul", $penulis = "penulis", $penerbit = "penerbit", $harga= 0, $jmlHalaman = 0){
@@ -108,9 +108,15 @@ class Komik extends GlobalProduk{
 
         return $str;
     }
+
+    public function getInfo(){
+        $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+
+        return $str;
+    }
 }
 
-class Game extends GlobalProduk{
+class Game extends Produk implements infoProfuk{
     public $wktMain;
     public function __construct($judul = "judul", $penulis = "penulis", $penerbit = "penerbit", $harga= 0, $wktMain = 0){
         parent::__construct($judul, $penulis, $penerbit, $harga);
@@ -123,13 +129,19 @@ class Game extends GlobalProduk{
         return $str;
     }
 
+    public function getInfo(){
+        $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+
+        return $str;
+    }
+
 
 }
 
 class cetakInfoProduk{
     public $daftarProduk = [];
 
-    public function tambahProduk(GlobalProduk $produk)
+    public function tambahProduk(Produk $produk)
     {
         $this->daftarProduk[]= $produk;
     }
@@ -143,8 +155,6 @@ class cetakInfoProduk{
 
         return $str;
     }
-
-    
 }
 
 $produk1 = new Komik("Naruto", "Masashi", "YOLO", 30000, 100);
@@ -157,6 +167,7 @@ $cetakProduk->tambahProduk($produk1);
 $cetakProduk->tambahProduk($produk2);
 
 echo $cetakProduk->cetak();
+
 
 
 
